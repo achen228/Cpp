@@ -22,3 +22,19 @@ void test_string1()
 	string s5(s2, 0, 5); // 从0开始取5个字符
 	cout << s5 << endl;
 }
+
+
+void test_string2()
+{
+	string s("hello");
+	// push_back 只能插入一个字符， append 可以插入字符串
+	s.push_back(' ');
+	s.append("world");
+	cout << s << endl;
+
+	string w("world");
+	s += '-';
+	s += "change ";
+	s += w;
+	cout << s << endl;
+}
