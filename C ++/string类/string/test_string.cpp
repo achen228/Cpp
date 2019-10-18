@@ -102,3 +102,72 @@ void test_string3()
 }
 
 
+void test_string4()
+{
+	string s1("hello");
+	string s2(s1);   // 拷贝构造  
+	string s3 = s1;  // 拷贝构造
+	string s4("world");
+	cout << s2 << endl;
+	s1 = s4;  // 赋值 
+	cout << s1 << endl;
+
+	s1[4] = 'x'; // 修改字符
+	// 遍历字符串中的每一个字符并打印
+	for (size_t i = 0; i < s1.size(); ++i)
+	{
+		cout << s1[i] << " "; // 调用 operator[]
+		//cout << s1.at(i) << " ";  // 早期接口at
+	}
+	cout << endl;
+
+	// 正向迭代器 [)
+	string::iterator it1 = s1.begin();
+	while (it1 != s1.end()) 
+	{
+		//++(*it1);  // 可读可写
+		cout << *it1 << " ";
+		++it1;
+	}
+	cout << endl;
+
+	// 反向迭代器 (]
+	string::reverse_iterator rit1 = s1.rbegin();
+	while (rit1 != s1.rend()) 
+	{
+		cout << *rit1 << " ";
+		++rit1;
+	}
+	cout << endl;
+
+	// const 迭代器
+	const string s5("122333");
+	string::const_iterator it5 = s5.begin();
+	while (it5 != s5.end())
+	{
+		//++(*it5);  // const 迭代器不可修改内容
+		cout << *it5 << " ";
+		++it5;
+	}
+	cout << endl;
+	////example:
+	////将 str 类型转成 int 类型，需要用 const 迭代器
+	//int StrToInt(const string& s) 
+	//{}
+
+	// C++11 范围 for 循环
+	for (auto ch : s5) 
+	{
+		cout << ch << " ";
+	}
+	cout << endl;
+
+	// 使用范围 for 循环改变内容赋值时  要用->引用
+	for (auto& ch : s4) 
+	{
+		ch = 'x';
+	}
+	cout << s4 << endl;
+}
+
+
