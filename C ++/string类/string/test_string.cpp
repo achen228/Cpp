@@ -171,3 +171,53 @@ void test_string4()
 }
 
 
+void test_string5()
+{
+	string s1("world");
+
+	// 插入
+	s1.insert(s1.begin(), ' ');
+	s1.insert(0, "hello");
+	cout << s1 << endl;
+
+	//// 删除
+	//s1.erase(++s1.begin(), --s1.end()); // 保留hd
+	//cout << s1 << endl;
+
+	// 删除空格（用迭代器）
+	// string::iterator it1 = s1.begin(); // 使用繁琐，C++11中可用下面的 auto
+	auto it1 = s1.begin();
+	while (it1 != s1.end())
+	{
+		if (*it1 == ' ')
+		{
+			s1.erase(it1);
+		}
+		++it1;
+	}
+	cout << s1 << endl;
+
+	//// 使用 find 找到空格后再删除
+	//auto pos = std::find(s1.begin(), s1.end(), ' ');
+	//if (pos != s1.end())
+	//{
+	//	s1.erase(pos);
+	//	cout << s1 << endl;
+	//}
+
+	string file1("string.cpp.gz");
+	// rfind(); 从字符串后向前查找
+	size_t pos = file1.rfind('.');
+	// substr(); 从pos开始取后面的字符串
+	string suffix = file1.substr(pos);
+	cout << suffix << endl;
+
+	string url1("http://www.cplusplus.com/reference/string/string/find/");
+	size_t start = url1.find("://");
+	start += 3;
+	size_t finish = url1.find('/', start);
+	string address = url1.substr(start, finish - start);
+	cout << address << endl;
+}
+
+
