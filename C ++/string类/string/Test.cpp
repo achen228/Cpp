@@ -221,3 +221,27 @@ void test_string5()
 }
 
 
+void test_string6()
+{
+	string str1;
+	cin >> str1;
+	cout << str1 << endl;
+
+	string str2;
+	cin >> str2;
+	cout << str2 << endl;
+
+	cout << (str1 < str2) << endl;
+	cout << (str1 == str2) << endl;
+
+	cout << str1 + "1111" << endl;
+	cout << "1111" + str1 << endl;
+}
+
+int main()
+{
+	test_string1();
+
+	system("pause");
+	return 0;
+}
