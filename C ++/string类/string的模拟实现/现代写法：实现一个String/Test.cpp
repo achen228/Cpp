@@ -13,6 +13,35 @@ void Test1()
 }
 
 
+void Test2()
+{
+	String s1("hello");
+	for (size_t i = 0; i < s1.Size(); ++i) 
+	{
+		cout << s1[i] << " ";
+	}
+	cout << endl;
+
+	String::Iterator it1 = s1.Begin();
+	while (it1 != s1.End())
+	{
+		cout << *it1 << " ";
+		++it1;
+	}
+	cout << endl;
+
+	const String s2("world");
+	String::ConstIterator it2 = s2.Begin();
+	while (it2 != s2.End()) 
+	{
+		cout << *it2 << " ";
+		++it2;
+	}
+	cout << endl;
+	cout << s2.c_str() << endl;
+}
+
+
 int main() 
 {
 	Test1();
