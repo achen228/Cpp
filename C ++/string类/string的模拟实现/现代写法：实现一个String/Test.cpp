@@ -42,6 +42,14 @@ void Test2()
 }
 
 
+void Test3()
+{
+	String s1;
+	s1.Reserve(15);
+	cout << s1.Capacity() << endl;
+}
+
+
 int main() 
 {
 	Test1();
