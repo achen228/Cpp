@@ -50,6 +50,27 @@ void Test3()
 }
 
 
+void Test4()
+{
+	String s1("hello");
+	s1 += ' ';
+	s1 += "world";
+	cout << s1.c_str() << endl;
+	cout << s1.Size() << endl;
+	cout << s1.Capacity() << endl;
+
+	s1.Resize(5);
+	cout << s1.c_str() << endl;
+	cout << s1.Size() << endl;
+	cout << s1.Capacity() << endl;
+
+	s1.Resize(20);
+	cout << s1.c_str() << endl;
+	cout << s1.Size() << endl;
+	cout << s1.Capacity() << endl;
+}
+
+
 int main() 
 {
 	Test1();
