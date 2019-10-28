@@ -71,6 +71,19 @@ void Test4()
 }
 
 
+void Test5()
+{
+	String s1("hello!");
+	s1.Insert(5, " world");
+	cout << s1.c_str() << endl;
+	cout << s1.Size() << endl;
+	cout << s1.Capacity() << endl;
+
+	s1.Erase(0, 5);
+	cout << s1.c_str() << endl;
+}
+
+
 int main() 
 {
 	Test1();
