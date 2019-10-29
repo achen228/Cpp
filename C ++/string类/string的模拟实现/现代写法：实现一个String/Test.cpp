@@ -84,6 +84,22 @@ void Test5()
 }
 
 
+void Test6()
+{
+	String ur1("http://www.cplusplus.com/");
+	cout << ur1.Find("www") << endl;
+	cout << ur1.Find("//", 2) << endl;
+
+	String s1("hello");
+	String s2("hello!");
+	String s3("hello");
+	cout << (s1 < s2) << endl;
+	cout << (s1 < s3) << endl;
+	cout << (s1 == s2) << endl;
+	cout << (s1 == s3) << endl;
+}
+
+
 int main() 
 {
 	Test1();
