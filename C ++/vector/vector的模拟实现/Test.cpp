@@ -60,3 +60,36 @@ void TestVector2()
 	}
 	cout << endl;
 }
+
+
+void TestVector3()
+{
+	Vector<int> v;
+	v.PushBack(1);
+	v.PushBack(2);
+	v.PushBack(2);
+	v.PushBack(3);
+	v.PushBack(4);
+	v.PushBack(5);
+	v.PushBack(6);
+	v.PushBack(7);
+
+	auto it = v.begin();
+	while (it != v.end())
+	{
+		if (*it % 2 == 0) 
+		{
+			it = v.Erase(it);
+		}
+		else 
+		{
+			++it;
+		}
+	}
+
+	for (auto e : v)
+	{
+		cout << e << " ";
+	}
+	cout << endl;
+}
