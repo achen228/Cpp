@@ -93,3 +93,42 @@ void TestVector3()
 	}
 	cout << endl;
 }
+
+
+void TestVector4()
+{
+	Vector<int> v;
+	v.PushBack(1);
+	v.PushBack(2);
+	v.PushBack(2);
+	v.PushBack(3);
+	v.PushBack(4);
+	v.PushBack(5);
+	v.PushBack(6);
+	v.PushBack(7);
+
+	Vector<int> copy(v);
+	for (auto e : v) 
+	{
+		cout << e << " ";
+	}
+	cout << endl;
+
+	for (auto e : copy) 
+	{
+		cout << e << " ";
+	}
+	cout << endl;
+
+	Vector<int> v2;
+	v2.PushBack(10);
+	v2.PushBack(11);
+	v = v2;
+
+	for (auto e : v)
+	{
+		cout << e << " ";
+	}
+	cout << endl;
+}
+
