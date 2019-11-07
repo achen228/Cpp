@@ -132,3 +132,27 @@ void TestVector4()
 	cout << endl;
 }
 
+
+void TestVector5()
+{
+	// 涉及到memcpy的深浅拷贝
+	Vector<std::string> v;
+	v.PushBack("1111111111111111");
+	v.PushBack("1111111111111111");
+	v.PushBack("1111111111111111");
+	v.PushBack("1111111111111111");
+	v.PushBack("1111111111111111");
+	for (auto e : v)
+	{
+		cout << e << endl;
+	}
+	cout << endl;
+}
+
+int main() 
+{
+	TestVector5();
+
+	system("pause");
+	return 0;
+}
