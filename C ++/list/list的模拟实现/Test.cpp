@@ -45,3 +45,32 @@ void TestList2()
 	int* pi = new int;
 	cout << *pi << endl;
 }
+
+
+void TestList3()
+{
+	List<int> l;
+	l.PushBack(1);
+	l.PushBack(2);
+	l.PushBack(3);
+	l.PushBack(4);
+
+	List<int> copy(l);
+	for (auto e : copy)
+	{
+		cout << e << " ";
+	}
+	cout << endl;
+
+	cout << l.Size() << endl;
+	cout << l.Empty() << endl;
+}
+
+
+int main()
+{
+	TestList3();
+
+	system("pause");
+	return 0;
+}
