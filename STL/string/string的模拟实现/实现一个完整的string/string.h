@@ -24,12 +24,12 @@ namespace MakeString
             return _str + _size;
         }
 
-        const iterator begin() const
+        const_iterator begin() const
         {
             return _str;
         }
 
-        const iterator end() const
+        const_iterator end() const
         {
             return _str + _size;
         }
