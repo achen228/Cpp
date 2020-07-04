@@ -1,212 +1,230 @@
-// vector 的模拟实现
-#pragma once
 #include <iostream>
-#include <assert.h>
+#include <cassert>
 using namespace std;
 
-template<class T>
-class Vector 
+namespace MakeVector
 {
-public:
-	typedef T* iterator;
-	typedef const T* const_iterator;
-
-	Vector()
-		:_start(nullptr)
-		, _finish(nullptr)
-		, _endofstorage(nullptr)
-	{}
-
-	//// 拷贝构造传统写法
-	//Vector(const Vector<T>& v)
-	//{
-	//	_start = new T[v.Capacity()];
-	//	memcpy(_start, v._start, v.Size()*sizeof(T));
-	//	_finish = _start + v.Size();
-	//	_endofstorage = _start + v.Capacity();
-	//}
-
-	Vector(const Vector<T>& v)
-		:_start(nullptr)
-		, _finish(nullptr)
-		, _endofstorage(nullptr)
+	template<class T>
+	class vector
 	{
-		//Reserve(v.Capacity());
-		Reserve(v.Size());
-		for (size_t i = 0; i < v.Size(); ++i)
+	public:
+		typedef T* iterator;
+		typedef const T* const_iterator;
+	public:
+		iterator begin()
 		{
-			this->PushBack(v[i]);
+			return _start;
 		}
-	}
 
-	// v1 = v2
-	Vector<T>& operator=(Vector<T> v) 
-	{
-		this->Swap(v);
-		return *this;
-	}
-
-	void Swap(Vector<T>& v) 
-	{
-		std::swap(_start, v._start);
-		std::swap(_finish, v._finish);
-		std::swap(_endofstorage, v._endofstorage);
-	}
-
-	~Vector() 
-	{
-		if (_start) 
+		iterator end()
 		{
-			delete[] _start;
-			_start = _finish = _endofstorage = nullptr;
+			return _finish;
 		}
-	}
 
-	iterator begin() 
-	{
-		return _start;
-	}
-
-	iterator end() 
-	{
-		return _finish;
-	}
-
-	const_iterator begin() const 
-	{
-		return _start;
-	}
-
-	const_iterator end() const 
-	{
-		return _finish;
-	}
-
-	void Reserve(size_t n) 
-	{
-		if (n > Capacity()) 
+		const_iterator begin() const
 		{
-			size_t size = Size();
-			// 开新空间
-			T* newarray = new T[n];
+			return _start;
+		}
 
-			// 对于内置类型浅拷贝
-			//if (_start)
-			//{
-			//	memcpy(newarray, _start, sizeof(T)*Size());
-			//}
+		const_iterator end() const
+		{
+			return _finish;
+		}
 
-			// 对于自定义类型深拷贝
-			for (size_t i = 0; i < size; ++i)
+		vector()
+			: _start(nullptr)
+			, _finish(nullptr)
+			, _endofstorage(nullptr)
+		{}
+
+		~vector()
+		{
+			if (_start)
 			{
-				newarray[i] = _start[i];
-			}			
-
-			// 释放旧空间
-			delete[] _start;
-
-			// 赋值
-			_start = newarray;
-			_finish = _start + size;
-			_endofstorage = _start + n;
-		}
-	}
-
-	void Resize(size_t n, const T& val = T())
-	{
-		if (n <= Size()) 
-		{
-			_finish = _start + n;
-		}
-		else 
-		{
-			Reserve(n);
-			while (_finish != _start + n)
-			{
-				*_finish = val;
-				++_finish;
+				delete[] _start;
+				_start = _finish = _endofstorage = nullptr;
 			}
 		}
-	}
 
-	void PushBack(const T& x) 
-	{
-		if (_finish == _endofstorage) 
+		//拷贝构造传统写法
+		//vector(const vector<T>& v)
+		//	: _start(nullptr)
+		//	, _finish(nullptr)
+		//	, _endofstorage(nullptr)
+		//{
+		//	_start = new T[v.capacity()];
+		//	_finish = _start;
+		//	_endofstorage = _start + v.capacity();
+		//	for (size_t i = 0; i < v.size(); ++i)
+		//	{
+		//		*_finish = v[i];
+		//		++_finish;
+		//	}
+		//}
+
+		//拷贝构造现代写法
+		vector(const vector<T>& v)
+			: _start(nullptr)
+			, _finish(nullptr)
+			, _endofstorage(nullptr)
 		{
-			size_t newcapacity = Capacity() == 0 ? 4 : Capacity() * 2;
-			Reserve(newcapacity);
+			reserve(v.capacity());
+			for (auto e : v)
+			{
+				push_back(e);
+			}
 		}
 
-		*_finish = x;
-		++_finish;
-	}
+		//赋值运算符传统写法
+		//vector<T>& operator=(const vector<T>& v)
+		//{
+		//	if (this != &v)
+		//	{
+		//		delete[] _start;
+		//		_start = new T[v.capacity()];
+		//		_finish = _start;
+		//		_endofstorage = _start + v.capacity();
+		//		for (size_t i = 0; i < v.size(); ++i)
+		//		{
+		//			*_finish = v[i];
+		//			++_finish;
+		//		}
+		//	}
+		//	return *this;
+		//}
 
-	void PopBack() 
-	{
-		assert(_finish > _start);
-		--_finish;
-	}
-
-	//void Insert(iterator& pos, const T& x)  // 加引用防止迭代器失效
-	void Insert(iterator pos, const T& x) 
-	{
-		assert(pos < _finish);
-		if (_finish == _endofstorage)
+		//赋值运算符现代写法
+		vector<T>& operator=(vector<T> v)
 		{
-			size_t n = pos - _start;
-			size_t newcapacity = Capacity() == 0 ? 4 : Capacity() * 2;
-			Reserve(newcapacity);
-			pos = _start + n;
+			std::swap(_start, v._start);
+			std::swap(_finish, v._finish);
+			std::swap(_endofstorage, v._endofstorage);
+			return *this;
 		}
 
-		iterator end = _finish - 1;
-		while (end >= pos) 
+		void reserve(size_t new_capacity)
 		{
-			*(end + 1) = *end;
-			--end;
+			if (new_capacity > capacity())
+			{
+				size_t sz = size();
+				T* tmp = new T[new_capacity];
+				if (_start)
+				{
+					//memcpy对于内置类型和自定义类型都是浅拷贝
+					//memcpy(tmp, _start, sizeof(T) * sz);
+
+					for (size_t i = 0; i < sz; ++i)
+					{
+						tmp[i] = _start[i];
+					}
+					delete[] _start;
+				}
+				_start = tmp;
+				_finish = _start + sz;
+				_endofstorage = _start + new_capacity;
+			}
 		}
 
-		*pos = x;
-		++_finish;
-	}
-
-	iterator Erase(iterator pos) 
-	{
-		assert(pos < _finish);
-		iterator it = pos;
-		while (it < _finish - 1) 
+		void resize(size_t n, const T& val = T())
 		{
-			*it = *(it + 1);
-			++it;
+			if (n < size())
+			{
+				_finish = _start + n;
+			}
+			else
+			{
+				if (n > capacity())
+				{
+					reserve(n);
+				}
+
+				while (_finish < _start + n)
+				{
+					*_finish = val;
+					++_finish;
+				}			
+			}
 		}
-		--_finish;
-		return pos;
-	}
 
-	size_t Size() const 
-	{
-		return _finish - _start;
-	}
+		void push_back(const T& val)
+		{
+			//扩容
+			if (_finish == _endofstorage)
+			{
+				size_t new_capacity = capacity() == 0 ? 2 : capacity() * 2;
+				reserve(new_capacity);
+			}
 
-	size_t Capacity() const 
-	{
-		return _endofstorage - _start;
-	}
+			*_finish = val;
+			++_finish;
+		}
 
-	T& operator[](size_t pos)
-	{
-		assert(pos < Size());
-		return _start[pos];
-	}
+		void pop_back()
+		{
+			assert(_start < _finish);
+			--_finish;
+		}
 
-	const T& operator[](size_t pos) const 
-	{
-		assert(pos < Size());
-		return _start[pos];
-	}
+		iterator insert(iterator pos, const T& val)
+		{
+			assert(pos <= _finish);
+			//扩容
+			if (_finish == _endofstorage)
+			{
+				size_t len = pos - _start;
+				size_t new_capacity = capacity() == 0 ? 2 : capacity() * 2;
+				reserve(new_capacity);
+				pos = _start + len;
+			}
 
-private:
-	iterator _start;
-	iterator _finish;
-	iterator _endofstorage;
-};
+			iterator end = _finish - 1;
+			while (end >= pos)
+			{
+				*(end + 1) = *end;
+				--end;
+			}
+			*pos = val;
+			++_finish;
+			return pos;
+		}
+
+		iterator erase(iterator pos)
+		{
+			assert(pos < _finish);
+			iterator begin = pos;
+			while (begin < _finish)
+			{
+				*(begin) = *(begin + 1);
+				++begin;
+			}
+			--_finish;
+			return pos;
+		}
+
+		T& operator[](size_t index)
+		{
+			assert(index < size());
+			return _start[index];
+		}
+
+		const T& operator[](size_t index) const
+		{
+			assert(index < size());
+			return _start[index];
+		}
+
+		const size_t size() const
+		{
+			return _finish - _start;
+		}
+
+		const size_t capacity() const
+		{
+			return _endofstorage - _start;
+		}
+	private:
+		iterator _start;
+		iterator _finish;
+		iterator _endofstorage;
+	};
+}
